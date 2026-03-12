@@ -59,3 +59,12 @@ export async function deleteTask(id,userId) {
 
     return deletedTask
 }
+
+export async function getUserTasksLimit(userId,page,limit) {
+    
+    const offset = (page - 1) * limit;
+
+    const tasks = await taskRepository.getTasks(userId,limit,offset)
+
+    return tasks
+}

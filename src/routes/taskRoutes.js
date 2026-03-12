@@ -4,7 +4,8 @@ import {
   createTask,
   getTasks,
   updateTask,
-  deleteTask,patchTaskController
+  deleteTask,patchTaskController,
+  getTasksController
 } from "../controllers/taskController.js";
 
 const router = express.Router();
@@ -12,6 +13,8 @@ const router = express.Router();
 router.post("/", authMiddleware, createTask);
 
 router.get("/", authMiddleware, getTasks);
+
+router.get("tasks",authMiddleware,getTasksController)
 
 router.put("/:id", authMiddleware, updateTask);
 

@@ -57,3 +57,17 @@ export async function getTaskById(id, userId) {
 
   return result.rows[0];
 }
+
+export async function getTasks(userId,limit,offset) {
+  
+  const tasks= `SELECT * FROM tasks WHERE user_id = $1
+  ORDER BY created_at  DESC
+  LIMIT $2
+  OFFSET $3`
+
+  const values = [userId,limit,offset]
+
+  const result = await pool.query(tasks,values)
+
+  return result.rows
+}
