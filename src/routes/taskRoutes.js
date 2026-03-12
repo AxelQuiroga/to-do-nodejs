@@ -2,7 +2,6 @@ import express from "express";
 import { authMiddleware } from "../middlewares/authMiddleware.js";
 import {
   createTask,
-  getTasks,
   updateTask,
   deleteTask,patchTaskController,
   getTasksController
@@ -12,14 +11,12 @@ const router = express.Router();
 
 router.post("/", authMiddleware, createTask);
 
-router.get("/", authMiddleware, getTasks);
-
-router.get("tasks",authMiddleware,getTasksController)
+router.get("/", authMiddleware, getTasksController);
 
 router.put("/:id", authMiddleware, updateTask);
 
 router.patch(
-  "/tasks/:id",
+  "/:id",
   authMiddleware,
   patchTaskController
 );

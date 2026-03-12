@@ -60,11 +60,21 @@ export async function deleteTask(id,userId) {
     return deletedTask
 }
 
-export async function getUserTasksLimit(userId,page,limit) {
-    
-    const offset = (page - 1) * limit;
+export async function getUserTasksLimit(userId, limit, page, offset) {
 
-    const tasks = await taskRepository.getTasks(userId,limit,offset)
+  const limitNumber = Number(limit)
+  const safeLimit = Number.isFinite(limitNumber) && limitNumber > 0 ? limitNumber : 10
 
-    return tasks
+  let safeOffset = Number(offset)
+
+  if (!Number.isFinite(safeOffset) || safeOffset < 0) {
+
+    const pageNumber = Number(page)
+    const safePage = Number.isFinite(pageNumber) && pageNumber > 0 ? pageNumber : 1
+
+    safeOffset = (safePage - 1) * safeLimit
+  }
+
+  return await taskRepository.getTasks(userId, safeLimit, safeOffset)
+
 }
