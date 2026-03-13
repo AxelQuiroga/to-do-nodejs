@@ -75,6 +75,6 @@ export async function getUserTasksLimit(userId, limit, page, offset) {
     safeOffset = (safePage - 1) * safeLimit
   }
 
-  return await taskRepository.getTasks(userId, safeLimit, safeOffset)
+  return taskRepository.getTasks(userId, safeLimit, safeOffset)
 
 }

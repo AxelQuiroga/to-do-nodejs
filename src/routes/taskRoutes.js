@@ -6,21 +6,22 @@ import {
   deleteTask,patchTaskController,
   getTasksController
 } from "../controllers/taskController.js";
+import { asyncHandler } from "../middlewares/asynchandler.js";
 
 const router = express.Router();
 
-router.post("/", authMiddleware, createTask);
+router.post("/", authMiddleware, asyncHandler(createTask));
 
-router.get("/", authMiddleware, getTasksController);
+router.get("/", authMiddleware, asyncHandler(getTasksController));
 
-router.put("/:id", authMiddleware, updateTask);
+router.put("/:id", authMiddleware, asyncHandler(updateTask));
 
 router.patch(
   "/:id",
   authMiddleware,
-  patchTaskController
+  asyncHandler(patchTaskController)
 );
 
-router.delete("/:id", authMiddleware, deleteTask);
+router.delete("/:id", authMiddleware, asyncHandler(deleteTask));
 
 export default router;

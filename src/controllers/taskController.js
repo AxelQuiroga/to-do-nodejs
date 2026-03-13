@@ -2,7 +2,7 @@ import * as taskService from "../services/taskService.js";
 
 export async function createTask(req,res){
 
-    try {
+
         const {title} = req.body
 
         const userId = req.userId
@@ -10,15 +10,12 @@ export async function createTask(req,res){
         const task = await taskService.createTask(title,userId)
 
         res.status(201).json(task)
-    } catch (error) {
 
-        res.status(400).json({ error: error.message });
-    }
+    
 }
 
 export async function getTasks(req, res) {
 
-  try {
 
     const userId = req.userId;
 
@@ -26,17 +23,13 @@ export async function getTasks(req, res) {
 
     res.json(tasks);
 
-  } catch (error) {
 
-    res.status(500).json({ error: error.message });
 
-  }
+  
 
 }
 
 export async function updateTask(req, res) {
-
-  try {
 
     const { id } = req.params;
 
@@ -53,17 +46,12 @@ export async function updateTask(req, res) {
 
     res.json(task);
 
-  } catch (error) {
-
-    res.status(400).json({ error: error.message });
-
-  }
 
 }
 
 
 export async function patchTaskController(req, res) {
-  try {
+  
 
     const { id } = req.params;
     const updates = req.body;
@@ -77,19 +65,13 @@ export async function patchTaskController(req, res) {
 
     res.json(updatedTask);
 
-  } catch (error) {
 
-    res.status(400).json({
-      error: error.message
-    });
-
-  }
 }
 
 
 export async function deleteTask(req, res) {
 
-  try {
+
 
     const { id } = req.params;
 
@@ -102,23 +84,19 @@ export async function deleteTask(req, res) {
       task
     });
 
-  } catch (error) {
 
-    res.status(400).json({ error: error.message });
-
-  }
 
 }
 
 export async function getTasksController(req,res) {
 
-  try {
 
     const userId = req.userId
 
-    const limit = req.query.limit
-    const page = req.query.page
-    const offset = req.query.offset
+   const limit = Number(req.query.limit) || 10;
+  const page = Number(req.query.page) || 1;
+
+  const offset = (page - 1) * limit;
 
     const tasks = await taskService.getUserTasksLimit(
       userId,
@@ -129,8 +107,5 @@ export async function getTasksController(req,res) {
 
     res.json(tasks)
 
-  } catch (error) {
-    res.status(500).json({ error: error.message })
-  }
 
 }
